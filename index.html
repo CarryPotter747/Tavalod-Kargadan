@@ -12,13 +12,8 @@
             animation: gradientBG 6s ease infinite;
             font-family: 'Comic Sans MS', cursive, sans-serif;
             color: white;
-            overflow: hidden;
+            overflow-x: hidden;
             margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             padding: 20px;
         }
 
@@ -55,17 +50,23 @@
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .text-input {
-            margin-top: 20px;
+        .comment-section {
+            margin-top: 30px;
+            width: 80%;
+            max-width: 500px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            color: black;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         }
 
         input {
-            width: 80%;
-            max-width: 400px;
+            width: 90%;
             padding: 10px;
             font-size: 16px;
             border-radius: 5px;
-            border: none;
+            border: 1px solid #ccc;
             text-align: center;
         }
 
@@ -84,6 +85,26 @@
             background-color: #e91e63;
         }
 
+        .comment-list {
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .comment {
+            background: #f9f9f9;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        #songMessage {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ff4081;
+        }
+
     </style>
 </head>
 <body>
@@ -96,14 +117,17 @@
         <img src="second-image.png" alt="Second Image" onerror="this.style.display='none'">
     </div>
 
-    <!-- Text Input -->
-    <div class="text-input">
-        <input type="text" id="message" placeholder="اینجا پیام بنویسید..." oninput="updateText()">
-        <p id="output"></p>
-    </div>
-
     <!-- Play Music Button -->
     <button onclick="playMusic()">🎵 Play Music 🎵</button>
+    <p id="songMessage"></p>
+
+    <!-- Comment Section -->
+    <div class="comment-section">
+        <h2>💬 Leave a Comment</h2>
+        <input type="text" id="commentInput" placeholder="Write something..." onkeypress="handleKeyPress(event)">
+        <button onclick="addComment()">Post</button>
+        <div class="comment-list" id="commentList"></div>
+    </div>
 
     <!-- Audio Element -->
     <audio id="birthdaySong">
@@ -114,14 +138,42 @@
     <script>
         function playMusic() {
             const audio = document.getElementById("birthdaySong");
-            audio.play()
-                .then(() => console.log("Music started!"))
-                .catch(err => console.error("Error playing music:", err));
+            const songMessage = document.getElementById("songMessage");
+
+            fetch('birthday.mp3')
+                .then(response => {
+                    if (response.ok) {
+                        audio.play()
+                            .then(() => songMessage.innerText = "🎶 Enjoy the music!")
+                            .catch(err => songMessage.innerText = "🔇 Oops! Something went wrong.");
+                    } else {
+                        songMessage.innerText = "🎤 Sing yourself! Didn't have the budget for a song!";
+                    }
+                })
+                .catch(() => {
+                    songMessage.innerText = "🎤 Sing yourself! Didn't have the budget for a song!";
+                });
         }
 
-        function updateText() {
-            const input = document.getElementById("message").value;
-            document.getElementById("output").innerText = input;
+        function addComment() {
+            const input = document.getElementById("commentInput");
+            const commentText = input.value.trim();
+
+            if (commentText === "") return;
+
+            const commentList = document.getElementById("commentList");
+            const comment = document.createElement("div");
+            comment.classList.add("comment");
+            comment.innerText = commentText;
+
+            commentList.appendChild(comment);
+            input.value = ""; // Clear input
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                addComment();
+            }
         }
     </script>
 
