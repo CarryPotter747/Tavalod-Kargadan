@@ -47,51 +47,43 @@
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* Confetti effect */
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: white;
-            opacity: 0.7;
-            top: -10px;
-            animation: fall linear infinite;
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
+        button:hover {
+            background-color: #e91e63;
         }
     </style>
 </head>
 <body>
 
-    <h1>تولد کرگدن مبارک!</h1>
-    <img src="rihno.png" alt="Happy Birthday Rhino">
+    <h1>🎉 تولد کرگدن مبارک! 🎉</h1>
 
-    <!-- 🎵 Background Music -->
-    <audio autoplay loop>
+    <!-- Image (Make sure rihno.png is uploaded!) -->
+    <img src="rhino.png" alt="Happy Birthday Rhino" onerror="this.style.display='none'">
+
+    <!-- Play Music Button -->
+    <button onclick="playMusic()">🎵 Play Music 🎵</button>
+
+    <!-- Audio Element -->
+    <audio id="birthdaySong" loop>
         <source src="birthday.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
     <script>
-        function createConfetti() {
-            const confetti = document.createElement('div');
-            confetti.classList.add('confetti');
-            document.body.appendChild(confetti);
-            
-            confetti.style.left = Math.random() * 100 + "vw";
-            confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
-            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
-
-            setTimeout(() => {
-                confetti.remove();
-            }, 5000);
+        function playMusic() {
+            const audio = document.getElementById("birthdaySong");
+            audio.play();
         }
-
-        setInterval(createConfetti, 200);
     </script>
 
 </body>
