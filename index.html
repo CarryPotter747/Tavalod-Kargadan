@@ -1,24 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday!</title>
+    <title>Tavalod Kargadan Mobarak!</title>
     <style>
         body {
             text-align: center;
-            background-color: #f5f5f5;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #ffcc00, #ff6699, #66ccff, #66ff99);
+            background-size: 400% 400%;
+            animation: gradientBG 6s ease infinite;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: white;
+            overflow: hidden;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+            animation: bounce 1.5s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
         img {
-            max-width: 80%;
+            max-width: 50%;
             height: auto;
             margin-top: 20px;
+            border: 5px solid white;
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Confetti effect */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            opacity: 0.7;
+            top: -10px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Happy Birthday!</h1>
+
+    <h1>تولد کرگدن مبارک!</h1>
     <img src="rhino.png" alt="Happy Birthday Rhino">
+
+    <script>
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            document.body.appendChild(confetti);
+            
+            confetti.style.left = Math.random() * 100 + "vw";
+            confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        setInterval(createConfetti, 200);
+    </script>
+
 </body>
 </html>
