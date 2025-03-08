@@ -70,21 +70,6 @@
             text-align: center;
         }
 
-        button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #ff4081;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #e91e63;
-        }
-
         .comment-list {
             margin-top: 10px;
             text-align: left;
@@ -105,6 +90,12 @@
             color: #ff4081;
         }
 
+        .music-image {
+            cursor: pointer;
+            width: 150px;
+            margin-top: 20px;
+        }
+
     </style>
 </head>
 <body>
@@ -117,15 +108,15 @@
         <img src="second-image.png" alt="Second Image" onerror="this.style.display='none'">
     </div>
 
-    <!-- Play Music Button -->
-    <button onclick="playMusic()">🎵 Play Music 🎵</button>
+    <!-- Play Music Image -->
+    <img src="play-music.png" alt="Play Music" class="music-image" onclick="playMusic()">
+
     <p id="songMessage"></p>
 
     <!-- Comment Section -->
     <div class="comment-section">
         <h2>💬 Leave a Comment</h2>
         <input type="text" id="commentInput" placeholder="Write something..." onkeypress="handleKeyPress(event)">
-        <button onclick="addComment()">Post</button>
         <div class="comment-list" id="commentList"></div>
     </div>
 
@@ -136,23 +127,25 @@
     </audio>
 
     <script>
+        // Load stored comments from localStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            const savedComments = JSON.parse(localStorage.getItem('comments')) || [];
+            savedComments.forEach(commentText => {
+                const commentList = document.getElementById("commentList");
+                const comment = document.createElement("div");
+                comment.classList.add("comment");
+                comment.innerText = commentText;
+                commentList.appendChild(comment);
+            });
+        });
+
         function playMusic() {
             const audio = document.getElementById("birthdaySong");
             const songMessage = document.getElementById("songMessage");
 
-            fetch('birthday.mp3')
-                .then(response => {
-                    if (response.ok) {
-                        audio.play()
-                            .then(() => songMessage.innerText = "🎶 Enjoy the music!")
-                            .catch(err => songMessage.innerText = "🔇 Oops! Something went wrong.");
-                    } else {
-                        songMessage.innerText = "🎤 عامو بودجه اهنگ نبود خودت بخون!";
-                    }
-                })
-                .catch(() => {
-                    songMessage.innerText = "🎤 Sing yourself! Didn't have the budget for a song!";
-                });
+            audio.play()
+                .then(() => songMessage.innerText = "🎶 Enjoy the music!")
+                .catch(err => songMessage.innerText = "🔇 Oops! Something went wrong.");
         }
 
         function addComment() {
@@ -167,6 +160,12 @@
             comment.innerText = commentText;
 
             commentList.appendChild(comment);
+
+            // Save comment to localStorage
+            const savedComments = JSON.parse(localStorage.getItem('comments')) || [];
+            savedComments.push(commentText);
+            localStorage.setItem('comments', JSON.stringify(savedComments));
+
             input.value = ""; // Clear input
         }
 
