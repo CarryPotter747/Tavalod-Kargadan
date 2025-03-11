@@ -46,22 +46,6 @@
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .chest-container {
-            display: none;
-            position: relative;
-            margin-top: 20px;
-        }
-
-        .chest {
-            width: 150px;
-            cursor: pointer;
-            transition: transform 0.5s ease;
-        }
-
-        .chest.open {
-            transform: translateY(-20px);
-        }
-
         .fireworks {
             display: none;
             position: absolute;
@@ -131,16 +115,13 @@
         <img src="rihno.png" alt="Happy Birthday Rhino" onerror="this.style.display='none'">
     </div>
 
-    <!-- Button to show chest -->
+    <!-- Button to show text and fireworks -->
     <div class="button-container">
-        <button onclick="showChest()">بمال منو</button>
+        <button onclick="showTextAndFireworks()">بمال منو</button>
     </div>
 
-    <!-- Chest Animation -->
-    <div class="chest-container" id="chestContainer">
-        <div class="fireworks" id="fireworks"></div>
-        <img src="chest-closed.png" id="chest" class="chest" onclick="openChest()">
-    </div>
+    <!-- Fireworks -->
+    <div class="fireworks" id="fireworks"></div>
 
     <!-- Hidden Text Section -->
     <div id="textSection" class="text-section">
@@ -148,40 +129,19 @@
         <p>از طرف پشمک سیاه ، سید احسان منادی 🍅</p>
     </div>
 
-    <!-- Game of Truth Section -->
-    <div class="game-section">
-        <h2>🎭 بازی حقیقت 🎭</h2>
-        <p id="question">آیا شما همجنسگرا هستید؟</p>
-        <button onclick="answerYes()">بله</button>
-        <button id="noButton" onclick="answerNo()">نه</button>
-    </div>
-
     <script>
-        function showChest() {
-            document.getElementById('chestContainer').style.display = 'block';
-        }
-
-        function openChest() {
-            const chest = document.getElementById('chest');
+        function showTextAndFireworks() {
             const textSection = document.getElementById('textSection');
             const fireworks = document.getElementById('fireworks');
-            chest.src = 'chest-open.png';
-            chest.classList.add('open');
-            fireworks.style.display = 'block';
+
+            // Show the text
+            textSection.style.display = 'block';
+            textSection.classList.add('reveal-animation');
+
+            // Show the fireworks after 1 second
             setTimeout(() => {
-                fireworks.style.display = 'none';
-                textSection.style.display = 'block';
-                textSection.classList.add('reveal-animation');
-            }, 2000);
-        }
-
-        function answerYes() {
-            document.getElementById("question").innerText = "I knew it, you little gay boy";
-            document.getElementById("noButton").style.display = "none";
-        }
-
-        function answerNo() {
-            document.getElementById("question").innerText = "Don't lie";
+                fireworks.style.display = 'block';
+            }, 1000);
         }
     </script>
 
