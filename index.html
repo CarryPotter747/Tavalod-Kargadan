@@ -134,9 +134,10 @@
         <button id="noButton" onclick="answerNo()">نه</button>
     </div>
 
-    <!-- Dynamic Image Container -->
-    <div id="dynamicImagesContainer">
-        <!-- New images will be appended here -->
+    <!-- Images at the bottom -->
+    <div class="image-container">
+        <img src="pic1.png" alt="Pic 1" onerror="this.style.display='none'">
+        <img src="pic2.png" alt="Pic 2" onerror="this.style.display='none'">
     </div>
 
     <script>
@@ -153,33 +154,6 @@
 
         function answerNo() {
             document.getElementById("question").innerText = "Don't lie";
-        }
-
-        // Scroll-to-load images
-        window.onscroll = function() {
-            if (document.documentElement.scrollTop + window.innerHeight >= document.documentElement.scrollHeight - 100) {
-                loadMoreImages();
-            }
-        };
-
-        function loadMoreImages() {
-            // Dynamically add images when user scrolls near the bottom
-            const container = document.getElementById('dynamicImagesContainer');
-            if (container.innerHTML === "") {
-                // Add pic1 and pic2 PNG images
-                const img1 = document.createElement('img');
-                img1.src = 'pic1.png';  // Replace with actual PNG image path
-                img1.alt = 'Pic 1';
-                img1.classList.add('new-image');
-
-                const img2 = document.createElement('img');
-                img2.src = 'pic2.png';  // Replace with actual PNG image path
-                img2.alt = 'Pic 2';
-                img2.classList.add('new-image');
-
-                container.appendChild(img1);
-                container.appendChild(img2);
-            }
         }
     </script>
 
